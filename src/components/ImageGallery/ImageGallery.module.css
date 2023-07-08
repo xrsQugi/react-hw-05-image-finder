@@ -1,0 +1,23 @@
+.loading_container{
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.error_text{
+    font: inherit;
+    font-size: 20px;
+    color: red;
+}
+
+.ImageGallery {
+    display: grid;
+    max-width: calc(100vw - 48px);
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    justify-content: center;
+    grid-gap: 16px;
+    margin: 20px auto;
+    padding: 0;
+    list-style: none;
+}
