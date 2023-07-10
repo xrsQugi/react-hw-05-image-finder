@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import style from './Searchbar.module.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class Searchbar extends Component {
 
@@ -15,6 +17,10 @@ export default class Searchbar extends Component {
 
     formSubmit = (event) => {
         event.preventDefault();
+        if (this.state.request.trim() === '') {
+            return toast.error('Please, enter search query.');
+        }
+        
         this.props.onSubmit(this.state.request);
         this.setState({ request: '' });
       };
@@ -35,6 +41,19 @@ export default class Searchbar extends Component {
                         autoFocus
                         placeholder="Search images and photos"
                     />
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="coloured"
+                    />
+                    <ToastContainer />
                 </form>
             </header>
         )

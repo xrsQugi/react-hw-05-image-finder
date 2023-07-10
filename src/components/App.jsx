@@ -9,6 +9,7 @@ export class App extends Component {
     request: '',
   };
 
+  //! Get value from form input 
   handleFormSubmit = request => {
     this.setState({ request });
   };
