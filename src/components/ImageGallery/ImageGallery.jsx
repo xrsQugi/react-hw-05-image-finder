@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 
+//! Стилі
 import style from './ImageGallery.module.css';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+//! Нотифікашки
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+import Notiflix from 'notiflix';
 
+//! Компоненти
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Loader from '../Loader/Loader';
 import Button from '../Button/Button';
@@ -42,14 +46,15 @@ export default class Searchbar extends Component {
         ImageFetch(nextQuery, page)
           .then(( images ) => {
 
-            // const total = Math.ceil(images.totalHits / 12);
-            // if(total < page){
-            //   return toast.info('You reached the end of results');
-            // }
-
             if (images.hits.length === 0) {
               //! Якщо нічого не прийшло у відповідь
-              toast.error('Sorry, nothing found');
+              Notiflix.Notify.failure('Sorry, nothing found', {
+                ID: 'MKA',
+                timeout: 2000,
+                showOnlyTheLastOne: true,
+                clickToClose: true,
+              });
+              // toast.error('Sorry, nothing found');
               return Promise.reject(new Error('Sorry, nothing found'))
             }
 
@@ -109,19 +114,19 @@ export default class Searchbar extends Component {
               <div className={style.loading_container}>
                 <h3 className={style.error_text}>{error.message}</h3>
               </div>
-              <ToastContainer
-                position="top-right"
+              {/* <ToastContainer
+                position="top-left"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
-                closeOnClick
+                closeOnClick={false}
                 rtl={false}
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
                 theme="coloured"
               />
-              <ToastContainer />
+              <ToastContainer /> */}
             </>
           )
         }

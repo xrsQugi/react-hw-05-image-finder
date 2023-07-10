@@ -4,7 +4,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 
 
-export class App extends Component {
+export default class App extends Component {
   state = {
     request: '',
   };
