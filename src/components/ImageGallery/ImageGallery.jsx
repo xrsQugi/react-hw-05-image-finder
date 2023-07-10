@@ -16,7 +16,8 @@ export default class Searchbar extends Component {
         images: [],
         error: false,
         status: 'idle',
-        page: 1
+        page: 1,
+        totalHits: 0,
       };
 
       increasePage = () => {
@@ -39,17 +40,25 @@ export default class Searchbar extends Component {
         const { page } = this.state;
 
         ImageFetch(nextQuery, page)
-          .then(({ hits }) => {
-            if (hits.length === 0) {
+          .then(( images ) => {
+
+            // const total = Math.ceil(images.totalHits / 12);
+            // if(total < page){
+            //   return toast.info('You reached the end of results');
+            // }
+
+            if (images.hits.length === 0) {
               //! Якщо нічого не прийшло у відповідь
               toast.error('Sorry, nothing found');
               return Promise.reject(new Error('Sorry, nothing found'))
             }
-            
+
+
             //! Якщо вдалося щось знайти
             this.setState(prevState => ({
-              images: [...prevState.images, ...hits],
+              images: [...prevState.images, ...images.hits],
               status: 'resolved',
+              totalHits: images.totalHits,
             }));
             this.scrollDown();
           })
@@ -73,32 +82,10 @@ export default class Searchbar extends Component {
       };
 
       loadMore = async () => {
-        await this.incrementPage();
+        this.incrementPage();
         this.fetchImages(this.props.request);
-        await this.scrollDown();
+        // this.scrollDown();
       }
-    
-      // setTimeout(() => {
-      //   fetch(`https://pixabay.com/api/?key=${this.state.API_KEY}&q=${this.props.request.toLowerCase()}&image_type=image&orientation=horizontal&safesearch=true&per_page=200`)
-      //     .then(res => {
-      //       if(res.ok){
-      //         return res.json();
-      //       }
-      //     })
-      //     .then(images => {
-      //       if(images.hits.length === 0){
-      //         return (
-      //           Promise.reject(new Error(`Sorry, there are no images matching your "${this.props.request}" query. Please try again.`))
-      //         )
-      //       }
-      //       this.setState(prevState => ({
-      //         images: [...prevState.images, ...images.hits],
-      //         error: false,
-      //         status: 'resolved',
-      //       }));
-      //     })
-      //     .catch(error => this.setState({error, status: "rejected"}))
-      // }, 1000)
 
       render() {
         const {images, error, status} = this.state;
@@ -146,9 +133,12 @@ export default class Searchbar extends Component {
                     <ImageGalleryItem  key={image.id} imageLinkSmall={image.webformatURL} imgaBig={image.largeImageURL} imageTag={image.tags}/>
                 ))}
               </ul>
-              <div className={style.loading_container}>
-                <Button onClick={this.loadMore}></Button>
-              </div>
+              {this.state.totalHits > 12 && this.state.totalHits > images.length && (
+                <div className={style.loading_container}>
+                  <Button onClick={this.loadMore}></Button>
+                </div>
+              )}
+              
             </>
           )
         }
