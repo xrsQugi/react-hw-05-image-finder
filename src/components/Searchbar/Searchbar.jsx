@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import style from './Searchbar.module.css';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+import Notiflix from 'notiflix';
 
 export default class Searchbar extends Component {
 
@@ -18,7 +19,13 @@ export default class Searchbar extends Component {
     formSubmit = (event) => {
         event.preventDefault();
         if (this.state.request.trim() === '') {
-            return toast.error('Please, enter search query.');
+            // return toast.error('Please, enter search query.');
+            return Notiflix.Notify.failure('Please, enter search query.', {
+                ID: 'MKA',
+                timeout: 2000,
+                showOnlyTheLastOne: true,
+                clickToClose: true,
+            });
         }
         
         this.props.onSubmit(this.state.request);
@@ -41,7 +48,7 @@ export default class Searchbar extends Component {
                         autoFocus
                         placeholder="Search images and photos"
                     />
-                    <ToastContainer
+                    {/* <ToastContainer
                         position="top-right"
                         autoClose={5000}
                         hideProgressBar={false}
@@ -53,7 +60,7 @@ export default class Searchbar extends Component {
                         pauseOnHover
                         theme="coloured"
                     />
-                    <ToastContainer />
+                    <ToastContainer /> */}
                 </form>
             </header>
         )
