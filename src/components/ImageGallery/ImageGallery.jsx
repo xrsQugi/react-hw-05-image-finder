@@ -53,7 +53,6 @@ export default class Searchbar extends Component {
               return Promise.reject(new Error('Sorry, nothing found'))
             }
 
-
             //! Якщо вдалося щось знайти
             this.setState(prevState => ({
               images: [...prevState.images, ...images.hits],
@@ -138,7 +137,6 @@ export default class Searchbar extends Component {
                   <Button onClick={this.loadMore}></Button>
                 </div>
               )}
-              
             </>
           )
         }
