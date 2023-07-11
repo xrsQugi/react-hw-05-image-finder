@@ -135,7 +135,7 @@ export default class Searchbar extends Component {
             <>
               <ul className={style.ImageGallery}>
                 {images.map(image => (
-                    <ImageGalleryItem  key={image.id} imageLinkSmall={image.webformatURL} imgaBig={image.largeImageURL} imageTag={image.tags}/>
+                    <ImageGalleryItem  key={image.id} imageLinkSmall={image.webformatURL} imageLinkBig={image.largeImageURL} imageTag={image.tags}/>
                 ))}
               </ul>
               {this.state.totalHits > 12 && this.state.totalHits > images.length && (
