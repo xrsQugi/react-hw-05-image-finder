@@ -24,11 +24,6 @@ export default class Searchbar extends Component {
         totalHits: 0,
       };
 
-      increasePage = () => {
-        this.setState(prevState => ({ page: prevState.page + 1 }));
-        console.log('this.state.page :>> ', this.state.page);
-      }
-
       componentDidUpdate(prevProps) {
         if (prevProps.request !== this.props.request) {
           //! Оновлюємо інформацію
