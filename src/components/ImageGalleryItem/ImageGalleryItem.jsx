@@ -17,38 +17,21 @@ export default class ImageGalleryItem extends Component {
         isVisible: false,
     };
     
-    componentDidMount = () => {
-        window.addEventListener('keydown', this.CloseModal)
+    toggleModal = () => {
+        this.setState(({ isVisible }) => ({ isVisible: !isVisible }))
     }
-    
-    componentWillUnmount = () => {
-        window.removeEventListener('keydown', this.CloseModal)
-    }
-    
-    OpenModal = () => {
-        this.setState({ isVisible: true });
-    };
-    
-    CloseModal = (e) => {
-        if (e.code === 'Escape'){
-          this.setState({ isVisible: false });
-        } else if (e.code === 'Enter'){
-            this.setState({ isVisible: false });
-        }
-    };
-
 
     render() {
 
-        const { imageLinkSmall, imageLinkBig, imageTag } = this.props;
+        const { imageLinkSmall, imageLinkBig, imageTag, toggleModal } = this.props;
         const { isVisible } = this.state;
 
         return (
             <>
                 <li className={style.ImageGalleryItem}>
-                    <img src={imageLinkSmall} alt={imageTag} className={style.ImageGalleryItem_image} onClick={this.OpenModal}/>
+                    <img src={imageLinkSmall} alt={imageTag} className={style.ImageGalleryItem_image} onClick={toggleModal}/>
                 </li>
-                {isVisible && <Modal imgSrc = {imageLinkBig} imgTag={imageTag}/>}
+                {isVisible && <Modal imgSrc={imageLinkBig} imgTag={imageTag} onClose={toggleModal}/>}
             </>
         )
     }

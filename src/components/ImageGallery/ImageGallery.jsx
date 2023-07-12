@@ -85,6 +85,7 @@ export default class Searchbar extends Component {
         this.fetchImages(this.props.request);
         // this.scrollDown();
       }
+      
 
       render() {
         const {images, error, status} = this.state;
