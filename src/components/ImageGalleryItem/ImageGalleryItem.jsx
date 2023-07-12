@@ -1,14 +1,5 @@
-// import React from 'react';
 import style from './ImageGalleryItem.module.css';
 import Modal from '../Modal/Modal';
-
-// export default function ImageGalleryItem({imageLinkSmall, imageLinkBig, imageTag}) {
-//     return(
-//         <li className={style.ImageGalleryItem}>
-//             <img src={imageLinkSmall} alt={imageTag} className={style.ImageGalleryItem_image}/>
-//         </li>
-//     )
-// }
 import React, { Component } from 'react';
 
 export default class ImageGalleryItem extends Component {
@@ -23,15 +14,15 @@ export default class ImageGalleryItem extends Component {
 
     render() {
 
-        const { imageLinkSmall, imageLinkBig, imageTag, toggleModal } = this.props;
+        const { imageLinkSmall, imageLinkBig, imageTag} = this.props;
         const { isVisible } = this.state;
 
         return (
             <>
                 <li className={style.ImageGalleryItem}>
-                    <img src={imageLinkSmall} alt={imageTag} className={style.ImageGalleryItem_image} onClick={toggleModal}/>
+                    <img src={imageLinkSmall} alt={imageTag} className={style.ImageGalleryItem_image} onClick={this.toggleModal}/>
                 </li>
-                {isVisible && <Modal imgSrc={imageLinkBig} imgTag={imageTag} onClose={toggleModal}/>}
+                {isVisible && <Modal imgSrc={imageLinkBig} imgTag={imageTag} onClose={this.toggleModal}/>}
             </>
         )
     }
