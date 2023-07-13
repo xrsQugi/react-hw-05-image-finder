@@ -1,14 +1,9 @@
-import React, { Component } from 'react';
-
-//! Стилі
+// Стилі
 import style from './ImageGallery.module.css';
-
-//! Нотифікашки
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+// Нотифікашки
 import Notiflix from 'notiflix';
-
-//! Компоненти
+// Компоненти
+import React, { Component } from 'react';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Loader from '../Loader/Loader';
 import Button from '../Button/Button';
@@ -24,12 +19,11 @@ export default class Searchbar extends Component {
         totalHits: 0,
       };
 
-      componentDidUpdate(prevProps) {
+      async componentDidUpdate(prevProps) {
         if (prevProps.request !== this.props.request) {
-          //! Оновлюємо інформацію
-          this.setState({ page: 1, images: [] });
-
-          //! Оновлюємо статус
+          // Оновлюємо інформацію
+          await this.reset();
+          // Оновлюємо статус
           this.setState({status: "pending"});
           this.fetchImages(this.props.request);
         }
@@ -42,18 +36,17 @@ export default class Searchbar extends Component {
           .then(( images ) => {
 
             if (images.hits.length === 0) {
-              //! Якщо нічого не прийшло у відповідь
+              // Якщо нічого не прийшло у відповідь
               Notiflix.Notify.failure('Sorry, nothing found', {
                 ID: 'MKA',
                 timeout: 2000,
                 showOnlyTheLastOne: true,
                 clickToClose: true,
               });
-              // toast.error('Sorry, nothing found');
               return Promise.reject(new Error('Sorry, nothing found'))
             }
 
-            //! Якщо вдалося щось знайти
+            // Якщо вдалося щось знайти
             this.setState(prevState => ({
               images: [...prevState.images, ...images.hits],
               status: 'resolved',
@@ -64,6 +57,10 @@ export default class Searchbar extends Component {
           
           //! Якщо все погано
           .catch(error => this.setState({ error, status: 'rejected' }));
+      };
+
+      reset = () => {
+        this.setState({ page: 1, images: [] });
       };
 
       incrementPage = () => {
@@ -81,20 +78,13 @@ export default class Searchbar extends Component {
       };
 
       loadMore = async () => {
-        this.incrementPage();
+        await this.incrementPage();
         this.fetchImages(this.props.request);
-        // this.scrollDown();
+        this.scrollDown();
       }
-      
 
       render() {
         const {images, error, status} = this.state;
-    
-        //!----- State machine -----
-        //? ("idle")
-        //? ("pending")
-        //? ("resolved")
-        //? ("rejected")
     
         if(status === "pending"){
           return (
