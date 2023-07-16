@@ -1,6 +1,7 @@
-import style from './ImageGalleryItem.module.css';
-import Modal from '../Modal/Modal';
 import React, { Component } from 'react';
+import Modal from '../Modal/Modal';
+import style from './ImageGalleryItem.module.css';
+import PropTypes from 'prop-types';
 
 export default class ImageGalleryItem extends Component {
 
@@ -27,3 +28,11 @@ export default class ImageGalleryItem extends Component {
         )
     }
 }
+
+ImageGalleryItem.propTypes = {
+    imageLinkSmall: PropTypes.string.isRequired,
+    imageLinkBig: PropTypes.string.isRequired,
+    imageTag: PropTypes.string.isRequired,
+    onClick: PropTypes.func,
+    onClose: PropTypes.func,
+};

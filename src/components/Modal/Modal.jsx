@@ -1,5 +1,6 @@
-import styles from './Modal.module.css'
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import styles from './Modal.module.css';
+import PropTypes from 'prop-types';
 
 export default class Modal extends Component {
   
@@ -30,3 +31,9 @@ export default class Modal extends Component {
     )
   }
 }
+
+Modal.propTypes = {
+  imgSrc: PropTypes.string.isRequired,
+  imgTag: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+};
